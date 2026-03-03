@@ -64,9 +64,12 @@ SELECT
     ,i.Total
     ,c.FirstName
     ,c.LastName
+    ,c.FirstName + c.LastName + CAST(i.InvoiceId AS VARCHAR) AS CustomerFullName
     ,CONCAT(c.FirstName,' ',c.LastName) AS Customer_FullName
+    ,c.SupportRepId
 FROM
-    Invoice i LEFT JOIN Customer c ON i.CustomerId = c.CustomerId
+    Invoice i INNER JOIN Customer c ON i.CustomerId = c.CustomerId --- INNER since ref intergrity between 
+    INNER JOIN Employee e ON c.SupportRepId = e.EmployeeId
 ORDER BY I.InvoiceDate DESC
 
 -- List the customers who have spent more than £45
